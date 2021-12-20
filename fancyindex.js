@@ -153,8 +153,98 @@ if (arrayOfCurrentPath.length > 0) {
 } else {
     document.getElementById("currentTitle").innerHTML = "Root";
 }
-document.getElementById("homelink").href = "../".repeat(arrayOfCurrentPath.length);
-document.getElementById("homebtn").href = "../".repeat(arrayOfCurrentPath.length);
+document.getElementById("homelink").href = rootPath;
+document.getElementById("homebtn").href = rootPath;
+
+// get file extension
+function getFileExtension(filename){
+	return filename.split('.').pop();
+}
+
+// get material-icon from file name
+function getMaterialIcon(filename){
+    var ext = getFileExtension(filename);
+    switch (ext.toLowerCase()) {
+        case "pdf":
+            return "picture_as_pdf";
+        case "doc":
+        case "docx":
+            return "description";
+        case "xls":
+        case "xlsx":
+            return "insert_chart";
+        case "ppt":
+        case "pptx":
+            return "speaker_notes";
+        case "zip":
+        case "rar":
+        case "7z":
+        case "tar":
+        case "xz":
+        case "gz":
+        case "bz2":
+        case "wim":
+        case "zst":
+        case "cab":
+            return "archive";
+        case "txt":
+            return "text_format";
+        case "mp3":
+        case "flac":
+        case "ape":
+        case "wav":
+            return "audiotrack";
+        case "jpg":
+        case "jpeg":
+        case "png":
+        case "gif":
+            return "photo";
+        case "mp4":
+        case "mkv":
+        case "avi":
+        case "mov":
+        case "wmv":
+        case "flv":
+        case "3gp":
+        case "m2ts":
+        case "mpg":
+        case "mpeg":
+        case "mpe":
+        case "mpv":
+        case "m2v":
+        case "m4v":
+        case "mxf":
+        case "vob":
+        case "dv":
+        case "dvd":
+        case "dvx":
+        case "dvf":
+        case "dif":
+            return "movie";
+        case "iso":
+        case "img":
+        case "bin":
+            return "layers";
+        case "sh":
+        case "bat":
+        case "cmd":
+        case "csh":
+        case "ksh":
+        case "zsh":
+        case "pl":
+        case "py":
+        case "rb":
+        case "php":
+        case "js":
+            return "code"; 
+        case "exe":
+            return "terminal";
+        case "url":
+            return "link";
+        default:
+            return "insert_drive_file";
+    }
+}
 
 // manage sort
 if (window.location.href.split("?")[1] == "C=M&O=D") {
@@ -247,7 +337,7 @@ for (var i = 0; i < listOfItems.length; ++i) {
         color = "mdl-color--accent";
         lib = lib.substring(0, lib.length - 1);
     } else {
-        icon = "insert_drive_file";
+        icon = getMaterialIcon(lib);
         color = "mdl-color--accent-dark";
     }
     if (size == "-") {
@@ -257,6 +347,8 @@ for (var i = 0; i < listOfItems.length; ++i) {
         dte = "";
     }
     if (size == "" && dte == "" && lib == "Parent directory") {
+    	if(currentPath === `${rootPath}/`)
+	    continue;
         icon = "arrow_back";
         color = "mdl-color--primary";
         viewGetInfo = "getinfo-novisible";

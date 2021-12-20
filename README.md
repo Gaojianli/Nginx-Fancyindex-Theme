@@ -39,6 +39,10 @@ server {
 
 }
 ```
+change your config in `config.js`
+```js
+const rootPath = "/" // set root path here
+```
 
 you can clone project an copy file in your root path nginx
 
